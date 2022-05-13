@@ -1,0 +1,58 @@
+.menu {
+  background-color: $background-grey-dark;
+  border-radius: 0;
+
+  .ui.grid {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .ui.grid>.column:not(.row) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  
+  &__left,
+  &__right {
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center;
+
+    .ui.menu {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      height: 100%;
+      
+      .item {
+        font-weight: bold !important;
+        height: 100%;
+        color: $font-light;
+        margin-right: 10px;
+        border-radius: 0 0 10px 10px;
+        transition: all 0.5s;
+        
+        &:hover {
+          background-color: $background-dark;
+          color: $primary;
+        }
+      }
+
+      .icon{
+        margin-right: 10px !important;
+        color: $primary;
+      }
+  }
+  }
+
+      
+  &__right{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import MenuWeb from './Menu/Menu'
 import TopBar from './TopBar/TopBar'
 
 const Header = () => {
@@ -7,9 +8,8 @@ const Header = () => {
       
       <TopBar/>
 
-      <div>
-        Menu
-      </div>
+      <MenuWeb/>
+
     </div>
   )
 }
