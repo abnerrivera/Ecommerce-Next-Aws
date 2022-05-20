@@ -4,10 +4,15 @@ import Link from 'next/link'
 import BasicModal from '../../Modal/BasicModal/BasicModal'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Auth from '../../Auth/Auth'
 
 export default function MenuWeb() {
 
   const [modal, setModal] = useState(false)
+  const [titleModal, setTitleModal] = useState("Inicia Sesion")
+
+  const onCloseModal = () => setModal(false)
+  const onShowModal = () => setModal(true)
 
   return (
     <div className='menu'>
@@ -20,7 +25,7 @@ export default function MenuWeb() {
 
           <Grid.Column className='menu__right' width={10}>
             <MenuUser
-              showModal={()=>setModal(true)}
+              showModal={onShowModal}
             />
           </Grid.Column>
 
@@ -30,10 +35,14 @@ export default function MenuWeb() {
       <BasicModal
         show={modal}
         setShow={setModal}
-        title="Inicia Sesion"
+        title={titleModal}
         size="small"
       >
-        <h2>MODAL</h2>
+        <Auth
+          onCloseModal={onCloseModal}
+          setTitleModal={setTitleModal}
+        />
+
       </BasicModal>
 
     </div>
