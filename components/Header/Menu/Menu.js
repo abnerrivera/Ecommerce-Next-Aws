@@ -1,8 +1,13 @@
 import React from 'react'
 import { Container, Menu, Grid, Icon, Label } from 'semantic-ui-react'
 import Link from 'next/link'
+import BasicModal from '../../Modal/BasicModal/BasicModal'
+import { useState } from 'react'
 
 export default function MenuWeb() {
+
+  const [modal, setModal] = useState(false)
+
   return (
     <div className='menu'>
       <Container>
@@ -13,20 +18,32 @@ export default function MenuWeb() {
           </Grid.Column>
 
           <Grid.Column className='menu__right' width={10}>
-            <MenuUser />
+            <MenuUser
+              showModal={()=>setModal(true)}
+            />
           </Grid.Column>
 
         </Grid>
       </Container>
+
+      <BasicModal 
+        show={modal}
+        setShow={setModal}
+        title="Inicia Sesion"
+        size="small"
+      >
+        <h2>MODAL</h2>
+      </BasicModal>
+
     </div>
   )
 }
 
-function OptionMenu({ link, optionTitle, icon }) {
+function OptionMenu({ link, optionTitle, icon, action }) {
   return (
     <Link href={link}>
       <a>
-        <Menu.Item>
+        <Menu.Item onClick={action}>
           {icon}
           {optionTitle}
         </Menu.Item>
@@ -60,13 +77,14 @@ function MenuPlataform() {
   )
 }
 
-function MenuUser() {
+function MenuUser({showModal}) {
   return (
     <Menu>
       <OptionMenu
         icon={<Icon name='user outline' />}
-        link="/account"
         optionTitle="MI CUENTA"
+        link="/#"
+        action={showModal}
       />
     </Menu>
 
