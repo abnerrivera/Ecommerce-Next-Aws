@@ -1,15 +1,18 @@
+//REACT
 import React from 'react'
 import { useState } from 'react'
+
+//UI
 import { Form, Button } from 'semantic-ui-react'
 
-//form
+//FORM
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-//data
+//DATA
 import { registerApi } from '../../../services/user'
 
-//toast
+//TOAST
 import { toast } from 'react-toastify'
 
 
@@ -27,15 +30,17 @@ const RegisterForm = ({ ShowLoginForm }) => {
 
     validationSchema: Yup.object(validationSchema()),
 
+
     onSubmit: async (formData) => {
 
       setLoading(true)
-      //funcion peticion api
+
+      //PETICION DATA
       const response = await registerApi(formData)
 
       //console.log(response)
 
-      //validation
+      //VALIDACION
       if (response?.jwt) {
         toast.success("Registrado de manera correcta")
         ShowLoginForm();
@@ -111,7 +116,7 @@ const RegisterForm = ({ ShowLoginForm }) => {
 
 export default RegisterForm
 
-//valores iniciales formulario
+//VALORES INICIALES FORM
 function initialValues() {
   return {
     name: "",
@@ -123,7 +128,7 @@ function initialValues() {
 }
 
 
-//validacion formulario
+//VALIDACIONES FORM
 function validationSchema() {
   return {
     name: Yup.string().required("Nombre es REQUERIDO"),

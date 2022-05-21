@@ -3,7 +3,6 @@ import { Container, Menu, Grid, Icon, Label } from 'semantic-ui-react'
 import Link from 'next/link'
 import BasicModal from '../../Modal/BasicModal/BasicModal'
 import { useState } from 'react'
-import { useEffect } from 'react'
 import Auth from '../../Auth/Auth'
 
 export default function MenuWeb() {
@@ -36,7 +35,7 @@ export default function MenuWeb() {
         show={modal}
         setShow={setModal}
         title={titleModal}
-        size="small"
+        size="tiny"
       >
         <Auth
           onCloseModal={onCloseModal}

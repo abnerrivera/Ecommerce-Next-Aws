@@ -1,6 +1,7 @@
 import { BASE_PATH } from '../utils/constants'
 
 
+//* REGISTER USER
 
 export async function registerApi (formData){
 
@@ -29,6 +30,8 @@ export async function registerApi (formData){
 }
 
 
+
+//* LOGIN USER
 
 export async function loginApi (formData){
 
