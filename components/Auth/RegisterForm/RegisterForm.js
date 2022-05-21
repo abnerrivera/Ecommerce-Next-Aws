@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 import { registerApi } from '../../../services/user'
 
 //toast
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 
 
@@ -20,24 +20,29 @@ const RegisterForm = ({ ShowLoginForm }) => {
 
   const [loading, setLoading] = useState(false);
 
+
   const formik = useFormik({
 
     initialValues: initialValues(),
+
     validationSchema: Yup.object(validationSchema()),
 
     onSubmit: async (formData) => {
+
       setLoading(true)
       //funcion peticion api
       const response = await registerApi(formData)
-      console.log(response)
 
-      if(response?.jwt){
+      //console.log(response)
+
+      //validation
+      if (response?.jwt) {
         toast.success("Registrado de manera correcta")
         ShowLoginForm();
-      }else{
-        console.log('error al registro')
+      } else {
         toast.error("Correo ya esta en uso")
       }
+
       setLoading(false)
     }
 

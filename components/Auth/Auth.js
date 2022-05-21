@@ -19,7 +19,7 @@ const Auth = ({onCloseModal, setTitleModal}) => {
   }
 
   return (showLogin ?
-    <LoginForm ShowRegisterForm={ShowRegisterForm}/>
+    <LoginForm ShowRegisterForm={ShowRegisterForm} onCloseModal={onCloseModal}/>
     :
     <RegisterForm ShowLoginForm={ShowLoginForm}/>
   )
