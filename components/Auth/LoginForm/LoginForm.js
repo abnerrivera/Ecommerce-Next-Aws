@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 //DATA
-import { loginApi } from '../../../services/user';
+import { loginApi, resetPassword } from '../../../services/user';
 
 //CONTEXTO
 import useAuth from '../../../hooks/useAuth';
@@ -62,6 +62,20 @@ const LoginForm = ({ ShowRegisterForm, onCloseModal }) => {
   })
 
 
+  //RECUPERAR CONTRASEÑA 
+  const resetPassword = () => {
+    formik.setErrors({}); //reseteamos los errores del form
+
+    const validateEmail = Yup.string().email().required();
+
+    //validacion (SI ES UN CORREO INVALIDO)
+    if(!validateEmail.isValidSync(formik.values.identifier)){
+      formik.setErrors({identifier: "PON TU CORREO PARA ENVIAR LA CONTRASEÑA"});
+    }else{
+      resetPassword(formik.values.identifier);
+    }
+
+  }
 
 
   return (
@@ -91,7 +105,7 @@ const LoginForm = ({ ShowRegisterForm, onCloseModal }) => {
         </Button>
 
         <div>
-          <Button type='button'>¿Olvidaste la contraseña?</Button>
+          <Button type='button' onClick={resetPassword}>¿Olvidaste la contraseña?</Button>
           <Button type='submit' className='submit' loading={loading /*TRAE EL VALOR DEL PRELOAD*/}>
             Iniciar sesion
           </Button>

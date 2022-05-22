@@ -1,6 +1,7 @@
 //REACT
 import { createContext } from 'react';
 
+
 //CREAMOS EL CONTEXT VALORES POR DEFECTO
 const AuthContext = createContext({
   auth: undefined, //OBJETO QUE GUARDA DATOS GENERADOS DEL USER

@@ -30,6 +30,31 @@ function MyApp({ Component, pageProps }) {
   const [reloadUser, setReloadUser] = useState(false)
 
 
+  //FUNCION QUE GUARDA DATOS AL HACER LOGIN Y LOS ENVIA AL AUTHDATA
+  const login = (token) => { //TOMO EL PARAMETRO DESDE EL LOGINFORM 
+    setToken(token)//setea token en el local storage
+    setAuth({
+      token: token,
+      idUser: jwtDecode(token).id //decodifica el jwt
+    })
+  }
+
+
+
+  // VALORES ENVIADOS AL CONTEXTO
+  const authData = useMemo( //usememo RECARGA LA PAGINA SOLO SI LLEGA DIFERENTE DATA DE LA GUARDADA
+    () => ({
+      auth: auth,
+      login,
+      logout: () => null,
+      setReloadUser, //cuando la funcion tiene el mismo nombre se deja un unico nombre 
+    }), [auth] //ACTUALIZA CADA VEZ QUE CAMBIE AUTH
+  );
+
+
+
+
+
   //MANETENER EL USUARIO LOGUEADO AL RECARGAR PAGINA
   useEffect(() => {
     //si recibo token es porque estoy logueado
@@ -47,26 +72,6 @@ function MyApp({ Component, pageProps }) {
     setReloadUser(false)
   }, [reloadUser])
 
-
-  //FUNCION QUE GUARDA DATOS AL HACER LOGIN Y LOS ENVIA AL AUTHDATA
-  const login = (token) => {
-    setToken(token)//setea token en el local storage
-    setAuth({
-      token: token,
-      idUser: jwtDecode(token).id //decodifica el jwt
-    })
-
-  }
-
-  // VALORES ENVIADOS AL CONTEXTO
-  const authData = useMemo( //usememo RECARGA LA PAGINA SOLO SI LLEGA DIFERENTE DATA DE LA GUARDADA
-    () => ({
-      auth: auth,
-      login: login,
-      logout: () => null,
-      setReloadUser, //cuando la funcion tiene el mismo nombre se deja un unico nombre 
-    }), [auth] //ACTUALIZA CADA VEZ QUE CAMBIE AUTH
-  );
 
   if (auth === undefined) return null;//sirve para decirle al app que no esta logueado
 
