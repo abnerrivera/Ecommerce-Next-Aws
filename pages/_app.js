@@ -5,12 +5,12 @@ import "../scss/global.scss";
 import "semantic-ui-css/semantic.min.css";
 
 //TOAST
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 //CONTEXT
 import AuthContext from "../context/AuthContext";
-import { setToken, getToken } from "../services/token";
+import { setToken, getToken, deleteToken } from "../services/token";
 
 //DATA EN MEMORIA
 //este hook sirve para memorizar la data cargada y no volver a cargarla, solo cambia valores cambiados
@@ -19,8 +19,14 @@ import { useMemo, useState, useEffect } from 'react';
 //DECODE JWT
 import jwtDecode from "jwt-decode";
 
+//RUTAS
+import { useRouter } from "next/router"
+
 
 function MyApp({ Component, pageProps }) {
+
+  //MANEJO DE RUTA
+  const route = useRouter();
 
   //ESTADO INICIAL OBJETO ENVIADO AL CONTEXT
   const [auth, setAuth] = useState(undefined)
@@ -39,6 +45,15 @@ function MyApp({ Component, pageProps }) {
     })
   }
 
+  //CERRA SESION
+  const logout = () => {
+    if (auth) {
+      deleteToken();
+      setAuth(null);
+      route.push("/")
+      toast.success("Sesion cerra con exito")
+    }
+  }
 
 
   // VALORES ENVIADOS AL CONTEXTO
@@ -46,7 +61,7 @@ function MyApp({ Component, pageProps }) {
     () => ({
       auth: auth,
       login,
-      logout: () => null,
+      logout,
       setReloadUser, //cuando la funcion tiene el mismo nombre se deja un unico nombre 
     }), [auth] //ACTUALIZA CADA VEZ QUE CAMBIE AUTH
   );
