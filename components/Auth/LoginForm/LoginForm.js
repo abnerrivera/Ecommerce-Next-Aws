@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 //DATA
-import { loginApi, resetPassword } from '../../../services/user';
+import { loginApi, resetPasswordApi } from '../../../services/user';
 
 //CONTEXTO
 import useAuth from '../../../hooks/useAuth';
@@ -68,11 +68,12 @@ const LoginForm = ({ ShowRegisterForm, onCloseModal }) => {
 
     const validateEmail = Yup.string().email().required();
 
+    //TODO: AVERIGUAR ERROR A LA RESPUESTA DE 500 AUTENTICACION INVALIDA STRAPI ERROR CON CORREOS GMAIL HOTMAIL (CORREOS FALSOS SIRVEN EJ: @HOLIS.ES)
     //validacion (SI ES UN CORREO INVALIDO)
     if(!validateEmail.isValidSync(formik.values.identifier)){
       formik.setErrors({identifier: "PON TU CORREO PARA ENVIAR LA CONTRASEÑA"});
     }else{
-      resetPassword(formik.values.identifier);
+      resetPasswordApi(formik.values.identifier);
     }
 
   }
@@ -82,7 +83,7 @@ const LoginForm = ({ ShowRegisterForm, onCloseModal }) => {
 
     <Form className="login-form" onSubmit={formik.handleSubmit}> {/* REQUERIDO POR EL PAQUETE DE FORMIK (TOMA LA DATA DEL FORM)*/}
 
-      <Form.Input
+      <Form.Input 
         name="identifier"
         type="text"
         placeholder="Correo electronico"
