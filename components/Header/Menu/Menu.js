@@ -4,14 +4,29 @@ import Link from 'next/link'
 import BasicModal from '../../Modal/BasicModal/BasicModal'
 import { useState } from 'react'
 import Auth from '../../Auth/Auth'
+import useAuth from '../../../hooks/useAuth'
+import { useEffect } from 'react'
+import { getMeApi } from '../../../services/user';
+
 
 export default function MenuWeb() {
 
-  const [modal, setModal] = useState(false)
-  const [titleModal, setTitleModal] = useState("Inicia Sesion")
+  const [modal, setModal] = useState(false);
+  const [titleModal, setTitleModal] = useState("Inicia Sesion");
+  const [user, setUser] = useState(undefined);
 
-  const onCloseModal = () => setModal(false)
-  const onShowModal = () => setModal(true)
+  const onCloseModal = () => setModal(false);
+  const onShowModal = () => setModal(true);
+
+  const { logout, auth } = useAuth();
+
+  useEffect(() => {
+    (async () => { //UTILIZAMOS LA FUNCION QUE SE LLAMA A SI MISMA DE MANERA ASYNCRONA PARA QUE EL USEEFFECT SEA "ASYNC"
+      const response = await getMeApi(logout);
+      setUser(response);
+    })();
+  }, [auth]);
+
 
   return (
     <div className='menu'>
@@ -23,9 +38,15 @@ export default function MenuWeb() {
           </Grid.Column>
 
           <Grid.Column className='menu__right' width={10}>
-            <MenuUser
-              showModal={onShowModal}
-            />
+            {user !== undefined && (
+              <MenuUser
+                showModal={onShowModal}
+                user={user}
+                logout={logout}
+              />
+            )}
+
+
           </Grid.Column>
 
         </Grid>
@@ -50,10 +71,10 @@ export default function MenuWeb() {
 
 function OptionMenu({ link, optionTitle, icon }) {
   return (
-    <Link href={link}>
+    <Link href={link} >
       <a>
         <Menu.Item>
-          {icon}
+          <Icon name={icon} />
           {optionTitle}
         </Menu.Item>
       </a>
@@ -86,17 +107,51 @@ function MenuPlataform() {
   )
 }
 
-function MenuUser({ showModal }) {
+function MenuUser({ showModal, user, logout }) {
   return (
     <Menu>
-      <Link href='/#' >
-        <a onClick={showModal}>
-          <Menu.Item>
-            <Icon name='user outline' />
-            CUENTA
+      {user ? (
+        <>
+
+          <OptionMenu
+            icon='game'
+            link='/orders'
+            optionTitle='Mis Pedidos'
+          />
+
+          <OptionMenu
+            icon='heart outline'
+            link='/wishlist'
+            optionTitle='Juegos Favoritos'
+          />
+
+          <OptionMenu
+            icon='user outline'
+            link='/account'
+            optionTitle={`${user.name} ${user.lastname}`}
+          />
+
+          <Link href='/cart' >
+            <Menu.Item>
+              <Icon name='cart' />
+            </Menu.Item>
+          </Link>
+
+          <Menu.Item onClick={logout} style={{ margin: '0' }}>
+            <Icon name='power off' />
           </Menu.Item>
-        </a>
-      </Link>
+
+        </>
+      ) : (
+        <Link href='/#' >
+          <a onClick={showModal}>
+            <Menu.Item>
+              <Icon name='user outline' />
+              CUENTA
+            </Menu.Item>
+          </a>
+        </Link>
+      )}
     </Menu>
 
   )
