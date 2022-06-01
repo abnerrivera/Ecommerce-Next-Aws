@@ -6,8 +6,8 @@ import { getMeApi } from '../services/user';
 import { useEffect, useState } from 'react';
 
 //COMPONENTS
-import ChangeNameForm from '../components/Account/ChangeNameForm/ChangeNameForm';
-
+import ChangeNameForm from '../components/Account/ChangeNameForm';
+import ChangeEmailForm from '../components/Account/ChangeEmailForm';
 
 const Account = () => {
   const [user, setUser] = useState(undefined);
@@ -43,7 +43,18 @@ function Configuration({ user, logout, setReloadUser }) {
     <div className="account__configuration">
       <div className="title">Configuracion</div>
       <div className="data">
-        <ChangeNameForm user={user} logout={logout} setReloadUser={setReloadUser} />
+
+        <ChangeNameForm
+          user={user}
+          logout={logout}
+          setReloadUser={setReloadUser}
+        />
+
+        <ChangeEmailForm
+          user={user}
+          logout={logout}
+          setReloadUser={setReloadUser}
+        />
       </div>
     </div>
   )
