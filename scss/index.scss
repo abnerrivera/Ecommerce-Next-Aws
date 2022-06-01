@@ -1,6 +1,9 @@
 //COLORS VARIABLES
 @import "../scss/colors.scss";
 
+//PAGES
+@import "../pages/account.scss";
+
 //LAYOUTS
 @import "../layouts/BasicLayout/BasicLayout.scss";
 
@@ -12,3 +15,6 @@
 @import "../components/Auth/Auth.scss";
 @import "../components/Auth/LoginForm/LoginForm.scss";
 @import "../components/Auth/RegisterForm/RegisterForm.scss";
+@import "../components/Account/ChangeNameForm/ChangeNameForm.scss";
+
+@import "../components/Account/ChangeEmailForm/ChangeEmailForm.scss";
