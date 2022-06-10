@@ -30,8 +30,6 @@ export async function registerApi(formData) {
   }
 }
 
-
-
 //LOGIN USER
 export async function loginApi(formData) {
 
@@ -59,8 +57,6 @@ export async function loginApi(formData) {
 
 }
 
-
-
 //FORGOTPASS
 export async function resetPasswordApi(email) {
 
@@ -86,7 +82,6 @@ export async function resetPasswordApi(email) {
     return null;
   }
 }
-
 
 //DATAUSER AUTH
 export async function getMeApi(logout) {
@@ -117,7 +112,7 @@ export async function updateNameApi(idUser, data, logout){
   }
 }
 
-//UPDATE NAME USER
+//UPDATE EMAIL USER
 export async function updateEmailApi(idUser, email, logout){
   try {
     const url = `${BASE_PATH}/api/users/${idUser}`;
@@ -134,3 +129,22 @@ export async function updateEmailApi(idUser, email, logout){
     return null;
   }
 }
+
+//UPDATE PASS USER
+export async function updatePassApi(idUser, pass, logout){
+  try {
+    const url = `${BASE_PATH}/api/users/${idUser}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify({pass}),
+    };
+    const result = await authFetch(url, params, logout);
+    return result ? result : null;
+  } catch (error) {
+    return null;
+  }
+}
+
