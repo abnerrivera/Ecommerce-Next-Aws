@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 //COMPONENTS
 import ChangeNameForm from '../components/Account/ChangeNameForm';
 import ChangeEmailForm from '../components/Account/ChangeEmailForm';
+import ChangepassForm from '../components/Account/ChangePassForm/ChangepassForm';
 
 const Account = () => {
   const [user, setUser] = useState(undefined);
@@ -31,7 +32,7 @@ const Account = () => {
 
   return (
     <BasicLayout className='account'>
-      <Configuration user={user} setReloadUser={setReloadUser} />
+      <Configuration user={user} setReloadUser={setReloadUser} logout={logout} />
     </BasicLayout>
   )
 }
@@ -55,6 +56,13 @@ function Configuration({ user, logout, setReloadUser }) {
           logout={logout}
           setReloadUser={setReloadUser}
         />
+
+        <ChangepassForm
+          user={user}
+          logout={logout}
+          setReloadUser={setReloadUser}
+        />
+
       </div>
     </div>
   )
